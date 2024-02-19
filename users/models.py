@@ -9,7 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='email')
     phone = models.CharField(max_length=12, **NULLABLE, verbose_name='телефон')
     city = models.CharField(max_length=100, **NULLABLE, verbose_name='город')
-    avatar = models.ImageField(upload_to="avatars", **NULLABLE, verbose_name='аватарка')
+    avatar = models.ImageField(upload_to="users/", **NULLABLE, verbose_name='аватарка')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -20,3 +20,4 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
+        ordering = ('pk',)

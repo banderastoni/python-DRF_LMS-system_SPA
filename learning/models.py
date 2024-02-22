@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import NULLABLE
+from users.models import NULLABLE, User
 
 
 class Course(models.Model):
@@ -20,7 +20,7 @@ class Lesson(models.Model):
     description = models.TextField(verbose_name='описание урока')
     image = models.ImageField(upload_to='courses/lessons/', verbose_name='превью урока', **NULLABLE)
     link = models.URLField(verbose_name='ссылка на видео', **NULLABLE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='название курса')
 
     def __str__(self):
         return f"{self.course} - {self.title}"
@@ -28,3 +28,4 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = 'урок'
         verbose_name_plural = 'уроки'
+

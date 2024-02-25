@@ -10,6 +10,6 @@ router = DefaultRouter()
 router.register(r'', UserViewSet, basename='users')
 
 urlpatterns = [
-                  path('payment_list/', PaymentListAPIView.as_view(), name='payment_list'),
-                  path('user_detail/<int:pk>/', UserProfileAPIView.as_view(), name='user_detail'),
-              ] + router.urls
+    path('payment_list/', PaymentListAPIView.as_view(), name='payment_list'),
+    path('user_detail/<int:pk>/', UserProfileAPIView.as_view(), name='user_detail'),
+] + router.urls

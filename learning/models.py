@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import NULLABLE, User
+from users.models import NULLABLE
 
 
 class Course(models.Model):
@@ -28,4 +28,3 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = 'урок'
         verbose_name_plural = 'уроки'
-

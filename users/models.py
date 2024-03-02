@@ -6,12 +6,18 @@ from learning.models import Course, Lesson
 NULLABLE = {'blank': True, 'null': True}
 
 
+class UserRoles(models.TextChoices):
+    MEMBER = 'member', _('member')
+    MODERATOR = 'moderator', _('moderator')
+
+
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name='email')
     phone = models.CharField(max_length=12, **NULLABLE, verbose_name='телефон')
     city = models.CharField(max_length=100, **NULLABLE, verbose_name='город')
     avatar = models.ImageField(upload_to="users/", **NULLABLE, verbose_name='аватарка')
+    role = models.CharField(max_length=20, choices=UserRoles.choices, default=UserRoles.MEMBER, verbose_name='роль')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

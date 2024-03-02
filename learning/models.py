@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from users.models import NULLABLE
 
@@ -6,6 +7,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100, verbose_name='название курса')
     description = models.TextField(verbose_name='описание курса', **NULLABLE)
     image = models.ImageField(upload_to='courses/', verbose_name='превью курса', **NULLABLE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return self.title
@@ -21,6 +23,7 @@ class Lesson(models.Model):
     image = models.ImageField(upload_to='courses/lessons/', verbose_name='превью урока', **NULLABLE)
     link = models.URLField(verbose_name='ссылка на видео', **NULLABLE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='название курса')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f"{self.course} - {self.title}"

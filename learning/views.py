@@ -93,4 +93,4 @@ class SubscriptionListAPIView(generics.ListAPIView):
     serializer_class = SubscriptionSerializer
     queryset = Subscription.objects.all()
     pagination_class = LearningPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]

@@ -57,3 +57,63 @@ class LessonTestCase(APITestCase):
         response = self.client.delete(path)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class SubscriptionTestCase(APITestCase):
+
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.user = User.objects.create(
+            email='test1@test.sky.pro',
+            password='123test',
+        )
+
+        self.client.force_authenticate(user=self.user)
+
+        self.course = Course.objects.create(
+            title='test',
+            description='test',
+            owner=self.user
+        )
+
+    def test_create_subscription(self):
+        data = {
+            'user': self.user.id,
+            'course': self.course.id,
+        }
+
+        response = self.client.post('/subscription/create/', data=data)
+        print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.json(),
+            {'message': 'подписка добавлена'}
+        )
+
+    def test_list_subscription(self):
+        response = self.client.get(reverse('learning:subscription_list'))
+        print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 4)
+        self.assertEqual(response.json(), {'count': 0, 'next': None, 'previous': None, 'results': []})
+
+    def test_delete_subscription(self):
+        data = {
+            'user': self.user.id,
+            'course': self.course.id,
+        }
+
+        response = self.client.post('/subscription/create/', data=data)
+
+        self.assertEqual(
+            response.json(),
+            {'message': 'подписка добавлена'}
+        )
+        print(response.json())
+
+        response = self.client.post('/subscription/create/', data=data)
+        self.assertEqual(
+            response.json(),
+            {'message': 'подписка удалена'}
+        )
+        print(response.json())

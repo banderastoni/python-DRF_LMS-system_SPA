@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
 from learning.models import Lesson, Course, Subscription
-from learning.validators import YoutubeUrlValidator
+from learning.validators import YoutubeUrlValidator, SubscriptionValidator
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -40,3 +40,6 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = '__all__'
+        validators = [
+            SubscriptionValidator(),
+        ]
